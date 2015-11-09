@@ -1,0 +1,4 @@
+*.pyc
+g2p.egg-info
+build
+dist
