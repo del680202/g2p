@@ -8,7 +8,7 @@
     :copyright: (c) 2015 by Terrence Chin.
     :license: BSD, see LICENSE for more details.
 """
-from setuptools import setup
+from setuptools import setup, find_packages
 
 classifiers = [
     'Development Status :: 4 - Beta',
@@ -28,15 +28,19 @@ classifiers = [
 
 setup(
     name                = 'g2p',
-    version             = '0.2',
+    version             = '0.4',
     description         = 'HTTP Proxy Server in Python, Convert GET to POST',
     long_description    = open('README.md').read().strip(),
     author              = 'Terrence Chin',
     author_email        = 'del680202@gmail.com',
     url                 = 'https://github.com/del680202/g2p',
     license             = 'BSD',
-    packages            = ['g2p'],
-    scripts             = ['g2p/g2p.py'],
+    packages            = find_packages(),
     install_requires    = [],
-    classifiers         = classifiers
+    classifiers         = classifiers,
+    entry_points        = {
+         'console_scripts': [
+            'g2p = g2p.g2p:main'
+        ] 
+    }
 )
