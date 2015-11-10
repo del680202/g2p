@@ -35,8 +35,8 @@ setup(
     author_email        = 'del680202@gmail.com',
     url                 = 'https://github.com/del680202/g2p',
     license             = 'BSD',
-    packages            = ['actions'],
-    scripts             = ['g2p.py'],
+    packages            = ['g2p'],
+    scripts             = ['g2p/g2p.py'],
     install_requires    = [],
     classifiers         = classifiers
 )
