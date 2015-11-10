@@ -17,7 +17,7 @@ import requests
 import logging
 import yaml
 
-from actions.action import *
+from g2p.actions.action import *
 from BaseHTTPServer import HTTPServer, BaseHTTPRequestHandler
 from urlparse import urlparse, parse_qs
 
