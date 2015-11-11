@@ -28,7 +28,7 @@ classifiers = [
 
 setup(
     name                = 'g2p',
-    version             = '0.4',
+    version             = '0.5',
     description         = 'HTTP Proxy Server in Python, Convert GET to POST',
     long_description    = open('README.md').read().strip(),
     author              = 'Terrence Chin',

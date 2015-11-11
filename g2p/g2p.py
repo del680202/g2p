@@ -13,13 +13,14 @@
 import sys
 import datetime
 import argparse
+import re
 import requests
 import logging
 import yaml
 
 from actions.action import *
 from BaseHTTPServer import HTTPServer, BaseHTTPRequestHandler
-from urlparse import urlparse, parse_qs
+from urlparse import urlparse, parse_qs, urljoin
 
 logger = logging.getLogger(__name__)
 
@@ -50,17 +51,33 @@ class RequestHandler(BaseHTTPRequestHandler):
         url = params.get('url', None)
         if url is not None:
             url = url[0] #['url'] -> 'url'
+            self.post(url, params)
+        else:
+            self.send_response(200)
+            self.end_headers()
+
+    def post(self, url, params):
             logger.info("Forword request:%s" % url)
             proxy = Proxy(url, RequestHandler.actions)
             result = proxy.handle()
+            src = self.fetch_src(result.content, url, params.get('src', [None])[0])
+            if src:
+                self.post(src, params)
+                return
+
             self.send_response(result.status_code)
             if result.headers.get('content-type', False):
                 self.send_header('content-type', result.headers.get('content-type'))
             self.end_headers()
             self.wfile.write(result.content)
-        else:
-            self.send_response(200)
-            self.end_headers()
+
+    def fetch_src(self, html, url, match_str):
+        if match_str is None: return None
+
+        src_list = re.findall("src=\"(.*?)\"", html)
+        for src in src_list:
+            if re.search(match_str, src):
+                return urljoin(url, src)
         
     do_POST = do_GET    
     do_PUT = do_GET
